@@ -17,7 +17,7 @@ public class UrlMapping {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "short_code", unique = true, nullable = false, length = 20)
+	@Column(name = "short_code", unique = true, length = 20)
 	private String shortCode;
 	
 	@Column(name = "original_url", nullable = false, columnDefinition = "TEXT")
@@ -27,7 +27,7 @@ public class UrlMapping {
 	private Long clickCount = 0L;
 	
 	@Column(name ="created_at")
-	private LocalDateTime createdAt;
+	private LocalDateTime createdAt = LocalDateTime.now();
 	
 	@Column(name ="expires_at")
 	private LocalDateTime expiresAt;

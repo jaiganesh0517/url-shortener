@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 public class Base62Service {
 
 	private static final String BASE62 = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	private String encode(long number) {
+	public String encode(long number) {
 		if(number == 0) {
 			return "0";
 		}
