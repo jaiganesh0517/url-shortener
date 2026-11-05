@@ -2,6 +2,8 @@ package com.jaiganesh.urlshortener.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jaiganesh.urlshortener.dto.ShortenRequest;
 import com.jaiganesh.urlshortener.dto.ShortenResponse;
+import com.jaiganesh.urlshortener.dto.StatsResponse;
 import com.jaiganesh.urlshortener.service.UrlService;
 
 import jakarta.validation.Valid;
@@ -19,7 +22,7 @@ public class UrlController {
 
     private final UrlService urlService;
 
-    // Correct constructor
+    
     public UrlController(UrlService urlService) {
         this.urlService = urlService;
     }
@@ -30,5 +33,12 @@ public class UrlController {
 
         ShortenResponse response = urlService.createShortUrl(request.getOriginalUrl());
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+    
+    @GetMapping("/stats/{shortCode}")
+    public ResponseEntity<StatsResponse> getStats(@PathVariable String shortCode){
+    	
+    	StatsResponse stats = urlService.getStats(shortCode);
+    	return ResponseEntity.ok(stats);
     }
 }

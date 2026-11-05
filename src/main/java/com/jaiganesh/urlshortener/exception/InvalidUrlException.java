@@ -1,5 +1,8 @@
 package com.jaiganesh.urlshortener.exception;
 
-public class InvalidUrlException {
+public class InvalidUrlException extends RuntimeException{
 
+	public InvalidUrlException(String message) {
+		super(message);
+	}
 }

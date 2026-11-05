@@ -5,7 +5,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jaiganesh.urlshortener.config.AppProperties;
 import com.jaiganesh.urlshortener.dto.ShortenResponse;
+import com.jaiganesh.urlshortener.dto.StatsResponse;
 import com.jaiganesh.urlshortener.entity.UrlMapping;
+import com.jaiganesh.urlshortener.exception.UrlNotFoundException;
 import com.jaiganesh.urlshortener.repository.UrlMappingRepository;
 
 @Service
@@ -43,6 +45,30 @@ public class UrlService {
 				originalUrl,
 				urlMapping.getCreatedAt()
 		);
+	}
+	
+	public String getOriginalUrl(String shortCode) {
+		
+		UrlMapping urlMapping = urlMappingRepository.findByShortCode(shortCode)
+				     .orElseThrow(() -> new UrlNotFoundException("Short URL not found" + shortCode));
+		
+		urlMapping.setClickCount(urlMapping.getClickCount() + 1);
+		urlMappingRepository.save(urlMapping);
+		
+		return urlMapping.getOriginalUrl();
+	}
+	
+	public StatsResponse getStats(String shortCode) {
+		
+		UrlMapping urlMapping = urlMappingRepository.findByShortCode(shortCode)
+				.orElseThrow(() -> new UrlNotFoundException("Short URL not found for code: " + shortCode));
+		
+		return new StatsResponse(
+				urlMapping.getShortCode(),
+				urlMapping.getOriginalUrl(),
+				urlMapping.getClickCount(),
+				urlMapping.getCreatedAt()
+				);
 	}
 
 }
