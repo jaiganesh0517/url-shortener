@@ -45,4 +45,15 @@ public class GlobalExceptionHandler {
 		
 		return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+	
+	@ExceptionHandler(RateLimitExceededException.class)
+	public ResponseEntity<Map<String, Object>> handleRateLimitExceeded(RateLimitExceededException ex) {
+	    Map<String, Object> error = new HashMap<>();
+	    error.put("success", false);
+	    error.put("message", "too many request");
+	    error.put("timestamp", LocalDateTime.now());
+	    error.put("status", 429);
+	    
+	    return new ResponseEntity<>(error, HttpStatus.TOO_MANY_REQUESTS);
+	}
 }
