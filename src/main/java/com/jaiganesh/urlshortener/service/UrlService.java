@@ -55,6 +55,7 @@ public class UrlService {
         return new ShortenResponse(shortUrl, shortCode, originalUrl, urlMapping.getCreatedAt());
     }
 
+    @Transactional
     public String getOriginalUrl(String shortCode) {
         String cacheKey = CACHE_PREFIX + shortCode;
 
@@ -93,10 +94,7 @@ public class UrlService {
 	}
 	
 	public void increaseClickCount(String shortCode) {
-		urlMappingRepository.findByShortCode(shortCode).ifPresent(urlMapping -> {
-			urlMapping.setClickCount(urlMapping.getClickCount() + 1);
-			urlMappingRepository.save(urlMapping);
-		});
+	    urlMappingRepository.incrementClickCount(shortCode);
 	}
 
 }

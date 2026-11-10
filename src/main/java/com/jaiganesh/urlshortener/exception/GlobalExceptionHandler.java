@@ -47,10 +47,10 @@ public class GlobalExceptionHandler {
 	}
 	
 	@ExceptionHandler(RateLimitExceededException.class)
-	public ResponseEntity<Map<String, Object>> handleRateLimitExceeded(RateLimitExceededException ex) {
+	public ResponseEntity<Map<String, Object>> handleGenericException(RateLimitExceededException ex) {
 	    Map<String, Object> error = new HashMap<>();
 	    error.put("success", false);
-	    error.put("message", "too many request");
+	    error.put("message", ex.getMessage());
 	    error.put("timestamp", LocalDateTime.now());
 	    error.put("status", 429);
 	    

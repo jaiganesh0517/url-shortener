@@ -26,6 +26,9 @@ public class RedirectController {
 	@GetMapping("/{shortCode}")
 	public ResponseEntity<Void> redirect(@PathVariable String shortCode , HttpServletRequest httpRequest){
 		
+		if ("favicon.ico".equals(shortCode)) {
+	        return ResponseEntity.notFound().build();
+	    }
 		String originalUrl = urlService.getOriginalUrl(shortCode);
 		
 		String clientIp = getClientIp(httpRequest);
