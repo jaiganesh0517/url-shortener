@@ -2,7 +2,7 @@
 
 A clean, production-style URL Shortener built with **Spring Boot**, **PostgreSQL**, and **Redis**.
 
-This project demonstrates real-world backend engineering practices: caching, rate limiting, proper exception handling, and clean architecture. It is suitable for portfolio and interview discussions.
+This project demonstrates real-world backend engineering practices: caching, rate limiting, proper exception handling, and clean architecture.
 
 ---
 
